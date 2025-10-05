@@ -3,731 +3,764 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EY - ServiceNow Alliance Map</title>
+    <title>EY & ServiceNow Alliance Map</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .title {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-ey {
-            background-color: #FFD700;
-            color: #333;
-        }
-        
-        .btn-ey:hover {
-            background-color: #FFC107;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-servicenow {
-            background-color: #28A745;
-            color: white;
-        }
-        
-        .btn-servicenow:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-reset {
-            background-color: #6C757D;
-            color: white;
-        }
-        
-        .btn-reset:hover {
-            background-color: #5A6268;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn.active {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        #map {
-            width: 100%;
-            height: 600px;
-            border-radius: 8px;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
             overflow: hidden;
         }
-        
-        .legend-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            z-index: 1000;
+        }
+        .logo-left {
+            left: 20px;
+        }
+        .logo-right {
+            right: 20px;
+        }
+        .logo-container img {
+            height: 60px;
+            width: auto;
+            background: white;
+            padding: 10px;
             border-radius: 8px;
-            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        
-        .legend-group {
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        .hover-card {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 0;
+            z-index: 1001;
+            display: none;
+            min-width: 600px;
+            max-width: 800px;
+            font-size: 18px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        .hover-card.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .card-content {
             display: flex;
-            flex-direction: column;
-            gap: 5px;
+            height: 100%;
         }
-        
-        .legend-group-title {
+        .card-section {
+            flex: 1;
+            padding: 25px;
+            position: relative;
+        }
+        .servicenow-section {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4f1d4 100%);
+            border-radius: 10px 0 0 10px;
+            border-right: 2px solid #c0c0c0;
+        }
+        .ey-section {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 100%);
+            border-radius: 0 10px 10px 0;
+        }
+        .section-title {
+            font-size: 22px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
+            color: #333;
             text-align: center;
         }
-        
+        .leader-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .leader-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .leader-details h4 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            color: #333;
+        }
+        .leader-details p {
+            margin: 0;
+            font-size: 16px;
+            color: #666;
+        }
+        .region-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .global-leaders {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-width: 450px;
+        }
+        .global-leaders h3 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        .global-leader-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(248, 249, 250, 0.8);
+        }
+        .global-leader-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+        .global-leader-info h5 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .global-leader-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .company-divider {
+            margin: 20px 0;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 20px;
+        }
+        .regional-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-width: 250px;
+        }
+        .regional-legend h4 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            color: #2c3e50;
+            text-align: center;
+        }
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
-        
         .legend-color {
             width: 20px;
             height: 20px;
             border-radius: 4px;
-        }
-        
-        /* Custom tooltip styling */
-        #custom-tooltip {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            pointer-events: none;
-            z-index: 1000;
-            max-width: 350px;
-            line-height: 1.4;
-            font-size: 14px;
-            color: #333;
-            display: none; /* Hidden by default */
-        }
-        #custom-tooltip .tooltip-header {
-            font-weight: bold;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-            color: #000;
-        }
-        #custom-tooltip .tooltip-section {
-            margin-bottom: 8px;
-        }
-        #custom-tooltip .tooltip-section strong {
-            color: #555;
-        }
-        #custom-tooltip .leader-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-            padding-left: 5px;
-        }
-        #custom-tooltip .profile-pic-placeholder {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background-color: #e0e0e0;
             margin-right: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .region-title-small {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 6px;
+            text-align: center;
+        }
+        .leader-info-inline {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #888;
-            font-weight: bold;
-            border: 1px solid #bbb;
-            flex-shrink: 0;
-        }
-        #custom-tooltip .leader-details {
-            flex-grow: 1;
-        }
-        #custom-tooltip .leader-details .name {
-            font-weight: bold;
-            color: #222;
-        }
-        #custom-tooltip .leader-details .role {
-            font-size: 0.9em;
-            color: #666;
-        }
-        #custom-tooltip .alliance-leaders-title {
-            font-weight: bold;
-            margin-top: 15px;
             margin-bottom: 8px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-            color: #000;
+            font-size: 14px;
+        }
+        .leader-photo-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+        .leader-text {
+            color: #2c3e50;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+        .legend-divider {
+            margin: 15px 0;
+            border-top: 2px solid #e0e0e0;
+        }
+        .company-header {
+            margin: 15px 0 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        .servicenow-header {
+            background-color: #28A745;
+            color: white;
+        }
+        .ey-header {
+            background-color: #FFD700;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="title">EY - ServiceNow Alliance Map</h1>
-            <p class="subtitle">Interactive Regional Leadership Overview</p>
+        <div class="logo-container logo-left">
+            <img src="images/EYLogo.png" alt="EY Logo">
         </div>
-        
-        <div class="controls">
-            <button class="btn btn-ey" onclick="showEYRegions()">Show EY Regions</button>
-            <button class="btn btn-servicenow" onclick="showServiceNowRegions()">Show ServiceNow Regions</button>
-            <button class="btn btn-reset" onclick="showAllRegions()">Show All Regions</button>
+        <div class="logo-container logo-right">
+            <img src="images/ServiceNowLogo.png" alt="ServiceNow Logo">
         </div>
-        
         <div id="map"></div>
-        
-        <div class="legend-container">
-            <div class="legend-group">
-                <div class="legend-group-title">EY Super Regions</div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #80B1D3;"></div><span>US + LATAM + Israel</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #B3DE69;"></div><span>Canada</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #FB8072;"></div><span>Europe West + EUW FSO</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #FDB462;"></div><span>UKI + UKI FSO</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #FCCDE5;"></div><span>Nordics + CESA + Nordics FSO</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #BC80BD;"></div><span>India + Africa</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #CCEBC5;"></div><span>Oceania + Oceania FSO</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #FFED6F;"></div><span>MENA</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #8DD3C7;"></div><span>Greater China + FSO</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #BEBADA;"></div><span>Japan + ASEAN + Korea + FSO</span></div>
+        <div id="hoverCard" class="hover-card">
+            <div class="region-name" id="regionName"></div>
+            <div class="card-content">
+                <div class="card-section servicenow-section">
+                    <div class="section-title">ServiceNow</div>
+                    <div id="servicenowContent"></div>
+                </div>
+                <div class="card-section ey-section">
+                    <div class="section-title">EY</div>
+                    <div id="eyContent"></div>
+                </div>
             </div>
-            <div class="legend-group">
-                <div class="legend-group-title">ServiceNow Regions</div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #66C2A5;"></div><span>North America</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #FC8D62;"></div><span>EMEA</span></div>
-                <div class="legend-item"><div class="legend-color" style="background-color: #8DA0CB;"></div><span>APJ + LATAM</span></div>
+        </div>
+        <div class="regional-legend">
+            <h4>EY Super Regions</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #80B1D3;"></div>
+                <span>US + LATAM + Israel</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #B3DE69;"></div>
+                <span>Canada</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FB8072;"></div>
+                <span>Europe West</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FDB462;"></div>
+                <span>UKI</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FCCDE5;"></div>
+                <span>Nordics + CESA</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #BC80BD;"></div>
+                <span>India + Africa</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #CCEBC5;"></div>
+                <span>Oceania</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FFED6F;"></div>
+                <span>MENA</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #8DD3C7;"></div>
+                <span>Greater China</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #BEBADA;"></div>
+                <span>Japan + ASEAN + Korea</span>
+            </div>
+            
+            <div class="legend-divider"></div>
+            
+            <h4>ServiceNow Regions</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #66C2A5;"></div>
+                <span>North America</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FC8D62;"></div>
+                <span>EMEA</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #8DA0CB;"></div>
+                <span>APJ + LATAM</span>
+            </div>
+        </div>
+        <div class="global-leaders">
+            <h3>Global Alliance Leaders</h3>
+            
+            <h4 class="company-header servicenow-header">ServiceNow</h4>
+            <div class="global-leader-item">
+                <img src="images/MarkBagley.jpg" alt="Mark Bagley" class="global-leader-photo">
+                <div class="global-leader-info">
+                    <h5>Mark Bagley</h5>
+                    <p>Global Partner Leader</p>
+                </div>
+            </div>
+            
+            <div class="global-leader-item">
+                <img src="images/ChristieRice.jpg" alt="Christie Rice" class="global-leader-photo">
+                <div class="global-leader-info">
+                    <h5>Christie Rice</h5>
+                    <p>Global Partner Manager</p>
+                </div>
+            </div>
+            
+            <div class="global-leader-item">
+                <img src="images/JonO'Beirne.png" alt="Jon O'Beirne" class="global-leader-photo">
+                <div class="global-leader-info">
+                    <h5>Jon O'Beirne</h5>
+                    <p>Partner Technology Strategist</p>
+                </div>
+            </div>
+            <div class="company-divider"></div>
+            
+            <h4 class="company-header ey-header">EY</h4>
+            <div class="global-leader-item">
+                <img src="images/AnindoDutta.jpg" alt="Anindo Dutta" class="global-leader-photo">
+                <div class="global-leader-info">
+                    <h5>Anindo Dutta</h5>
+                    <p>Global Alliance Leader</p>
+                </div>
+            </div>
+            
+            <div class="global-leader-item">
+                <img src="images/JohnJostes.jpg" alt="John Jostes" class="global-leader-photo">
+                <div class="global-leader-info">
+                    <h5>John Jostes</h5>
+                    <p>Global Alliance Director</p>
+                </div>
             </div>
         </div>
     </div>
-
-    <div id="custom-tooltip"></div>
-
     <script>
-        // Alliance Leaders Data
-        const allianceLeaders = {
-            servicenow: {
-                global: [
-                    { name: "Mark Bagley", role: "Global Partner Leader (GPL)" },
-                    { name: "Christie Rice", role: "Global Partner Manager (GPM)" },
-                    { name: "Jon O'Beirne", role: "Partner Technology Strategist (PTS)" }
-                ],
-                northAmerica: [
-                    { name: "Mark Folit", role: "US Partner Manager for FS and TMT" },
-                    { name: "Kevin Dineen", role: "US Partner Manager Non-FS" },
-                    { name: "Tim Holmes", role: "US Partner Manager Govt Public Sector" },
-                    { name: "Joanne Yo", role: "Canada Partner Manager" }
-                ],
-                emea: [
-                    { name: "Julien Charpentier", role: "EMEA Partner Manager" },
-                    { name: "Petros Papakostas", role: "EMEA Partner Technology Strategist (PTS)" },
-                    { name: "Craig Wood", role: "UKI Partner Manager" },
-                    { name: "Martin McBryde", role: "UKI Partner Technology Strategist" }
-                ],
-                apjLatam: [
-                    { name: "Sandeep D", role: "APAC Partner Manager" },
-                    { name: "Michelle Mitchellhill", role: "ANZ Partner Manager" },
-                    { name: "Rob O'Leary", role: "ANZ Partner Technology Strategist" }
-                ]
+        // ServiceNow Regional Leaders
+        const servicenowLeaders = {
+            'North America': [
+                       { name: 'Mark Bagley', title: 'Global Partner Leader', photo: 'images/MarkBagley.jpg' },
+                { name: 'Christie Rice', title: 'Global Partner Manager', photo: 'images/ChristieRice.jpg' },
+                { name: 'Jon O\'Beirne', title: 'Partner Technology Strategist', photo: 'images/JonO\'Beirne.png' },
+                { name: 'Kevin Dineen', title: 'Partner Manager (MFG, HCLS, Retail)', photo: 'images/KevinDineen.png' },
+                { name: 'Mark Folit', title: 'Partner Manager (FSO, TMT)', photo: 'images/MarkFolit.jpg' },
+                { name: 'Tim Holmes', title: 'Partner Manager (GPS)', photo: 'images/MarkBagley.jpg' },
+                { name: 'Sam Siam', title: 'Global Partner Seller (Built On)', photo: 'images/SamSiam.jpg' }
+            ],
+            'EMEA': [
+                    { name: 'Mark Bagley', title: 'Global Partner Leader', photo: 'images/MarkBagley.jpg' },
+                { name: 'Julien Charpentier', title: 'Partner Manager', photo: 'images/JulienCharpentier.png' },
+                { name: 'Bernhard Schwemmer', title: 'Partner Manager (Germany)', photo: 'images/BernhardSchwemmer.jpg' },
+                { name: 'Craig Wood', title: 'Partner Manager (UKI)', photo: 'images/ChristieRice.jpg' },
+                { name: 'Petros Papakostas', title: 'Partner Technology Strategist (EMEA)', photo: 'images/PetrosPapakostas.jpg' },
+                { name: 'Olivia Hambert', title: 'Partner Technology Strategist (MENA)', photo: 'images/ChristieRice.jpg' },
+                { name: 'Martin McBryde', title: 'Partner Technology Strategist (UKI)', photo: 'images/MartinMcBryde.jpg' }
+            ],
+            'APJ + LATAM': [
+                { name: 'Mark Bagley', title: 'Global Partner Leader', photo: 'images/MarkBagley.jpg' },
+                { name: 'Michelle Mitchelhill', title: 'Partner Manager (ANZ)', photo: 'images/MichelleMitchellhill.jpg' },
+                { name: 'Rob O\'Leary', title: 'Partner Technology Strategist (ANZ)', photo: 'images/RobOLeary.jpg' }
+            ]
+        };
+        // EY Regional Leaders
+        const eyLeaders = {
+            'US + LATAM + Israel': {
+                leader: 'Anindo Dutta',
+                title: 'Global Alliance Leader',
+                photo: 'images/AnindoDutta.jpg'
             },
-            ey: {
-                global: [
-                    { name: "Anindo Dutta", role: "Global Alliance Leader" },
-                    { name: "Kaspar Schuler", role: "Offerings and Solutions" }
-                ],
-                americas: [
-                    { name: "John Jostes", role: "US Partner Manager" }
-                ]
-            }
-        };
-
-        // Regional data mapping
-        const regionData = {
-            ey: {
-                "US + LATAM + Israel": {
-                    countries: ["United States", "Mexico", "Brazil", "Argentina", "Colombia", "Peru", "Chile", "Venezuela", "Ecuador", "Bolivia", "Paraguay", "Uruguay", "Guyana", "Suriname", "French Guiana", "Israel", "Guatemala", "Honduras", "El Salvador", "Nicaragua", "Costa Rica", "Panama", "Cuba", "Dominican Republic", "Haiti", "Jamaica", "Puerto Rico", "Trinidad and Tobago", "Bahamas", "Barbados", "Belize", "Dominica", "Grenada", "St. Kitts and Nevis", "St. Lucia", "St. Vincent and the Grenadines"],
-                    leader: "Julie Boland", 
-                    allianceLeaders: [...allianceLeaders.ey.global, ...allianceLeaders.ey.americas],
-                    hoverColor: "#FFFACD" // Light yellow for EY hover
-                },
-                "Canada": {
-                    countries: ["Canada"],
-                    leader: "Alycia Calvert",
-                    allianceLeaders: [...allianceLeaders.ey.global, ...allianceLeaders.ey.americas],
-                    hoverColor: "#FFFACD"
-                },
-                "Europe West + EUW FSO": {
-                    countries: ["France", "Germany", "Spain", "Italy", "Portugal", "Belgium", "Netherlands", "Luxembourg", "Switzerland", "Austria"],
-                    leader: "Rudi Braes",
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                },
-                "UKI + UKI FSO": {
-                    countries: ["United Kingdom", "Ireland"],
-                    leader: "Anna Anthony",
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                },
-                "Nordics + CESA + Nordics FSO": {
-                    countries: ["Sweden", "Norway", "Finland", "Denmark", "Iceland", "Poland", "Czech Republic", "Slovakia", "Hungary", "Romania", "Bulgaria", "Croatia", "Serbia", "Slovenia", "Bosnia and Herzegovina", "Montenegro", "Albania", "North Macedonia", "Greece", "Cyprus", "Malta", "Estonia", "Latvia", "Lithuania"],
-                    leader: "Jacek Kędzior", 
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                },
-                "India + Africa": {
-                    countries: ["India", "South Africa", "Nigeria", "Kenya", "Ghana", "Angola", "Ethiopia", "Tanzania", "Uganda", "Zambia", "Zimbabwe", "Mozambique", "Madagascar", "Mauritius", "Reunion", "Seychelles", "Comoros", "Malawi", "Rwanda", "Burundi", "Congo (Brazzaville)", "Congo (Kinshasa)", "Gabon", "Cameroon", "Central African Republic", "Chad", "Niger", "Mali", "Burkina Faso", "Benin", "Togo", "Ivory Coast", "Liberia", "Sierra Leone", "Guinea", "Guinea-Bissau", "Gambia", "Senegal", "Cape Verde"],
-                    leader: "Rajiv Memani",
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                },
-                "Oceania + Oceania FSO": {
-                    countries: ["Australia", "New Zealand", "Papua New Guinea", "Fiji", "Solomon Islands", "Vanuatu", "New Caledonia", "Samoa", "Tonga", "Kiribati", "Tuvalu", "Nauru", "Marshall Islands", "Micronesia", "Palau"],
-                    leader: "David Larocca",
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                },
-                "MENA": {
-                    countries: ["Egypt", "Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", "Bahrain", "Oman", "Jordan", "Lebanon", "Iraq", "Yemen", "Syria", "Libya", "Tunisia", "Algeria", "Morocco", "Sudan", "Mauritania", "Djibouti", "Somalia", "Eritrea"],
-                    leader: "Abdulaziz Al-Sowailim",
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                },
-                "Greater China + FSO": {
-                    countries: ["China", "Hong Kong", "Taiwan", "Macau"],
-                    leader: "Jack Chan",
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                },
-                "Japan + ASEAN + Korea + FSO": {
-                    countries: ["Japan", "South Korea", "Mongolia", "Singapore", "Malaysia", "Indonesia", "Thailand", "Vietnam", "Philippines", "Brunei", "Cambodia", "Laos", "Myanmar", "East Timor"],
-                    leader: "Moriaki Kida",
-                    allianceLeaders: allianceLeaders.ey.global,
-                    hoverColor: "#FFFACD"
-                }
+            'Canada': {
+                leader: 'Anindo Dutta',
+                title: 'Global Alliance Leader',
+                photo: 'images/AnindoDutta.jpg'
             },
-            servicenow: {
-                "North America": {
-                    countries: ["United States", "Canada", "Mexico"],
-                    leader: "Steve Walters",
-                    allianceLeaders: [...allianceLeaders.servicenow.global, ...allianceLeaders.servicenow.northAmerica],
-                    hoverColor: "#E0FFE0" // Light green for ServiceNow hover
-                },
-                "EMEA": {
-                    countries: ["United Kingdom", "Ireland", "France", "Germany", "Spain", "Italy", "Portugal", "Belgium", "Netherlands", "Luxembourg", "Switzerland", "Austria", "Poland", "Czech Republic", "Slovakia", "Hungary", "Romania", "Bulgaria", "Croatia", "Serbia", "Slovenia", "Bosnia and Herzegovina", "Montenegro", "Albania", "North Macedonia", "Greece", "Cyprus", "Malta", "Estonia", "Latvia", "Lithuania", "Egypt", "Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", "Bahrain", "Oman", "Jordan", "Lebanon", "Iraq", "Yemen", "Syria", "Libya", "Tunisia", "Algeria", "Morocco", "Sudan", "Mauritania", "Djibouti", "Somalia", "Eritrea", "South Africa", "Nigeria", "Kenya", "Ghana", "Angola", "Ethiopia", "Tanzania", "Uganda", "Zambia", "Zimbabwe", "Mozambique", "Madagascar", "Mauritius", "Reunion", "Seychelles", "Comoros", "Malawi", "Rwanda", "Burundi", "Congo (Brazzaville)", "Congo (Kinshasa)", "Gabon", "Cameroon", "Central African Republic", "Chad", "Niger", "Mali", "Burkina Faso", "Benin", "Togo", "Ivory Coast", "Liberia", "Sierra Leone", "Guinea", "Guinea-Bissau", "Gambia", "Senegal", "Cape Verde"],
-                    leader: "Cathy Mauzaize",
-                    allianceLeaders: [...allianceLeaders.servicenow.global, ...allianceLeaders.servicenow.emea],
-                    hoverColor: "#E0FFE0"
-                },
-                "APJ + LATAM": {
-                    countries: ["Australia", "New Zealand", "Japan", "South Korea", "China", "India", "Singapore", "Malaysia", "Indonesia", "Thailand", "Vietnam", "Philippines", "Pakistan", "Bangladesh", "Sri Lanka", "Mongolia", "Hong Kong", "Taiwan", "Macau", "Papua New Guinea", "Fiji", "Solomon Islands", "Vanuatu", "New Caledonia", "Samoa", "Tonga", "Kiribati", "Tuvalu", "Nauru", "Marshall Islands", "Micronesia", "Palau", "Brazil", "Argentina", "Colombia", "Peru", "Chile", "Venezuela", "Ecuador", "Bolivia", "Paraguay", "Uruguay", "Guyana", "Suriname", "French Guiana", "Guatemala", "Honduras", "El Salvador", "Nicaragua", "Costa Rica", "Panama", "Cuba", "Dominican Republic", "Haiti", "Jamaica", "Puerto Rico", "Trinidad and Tobago", "Bahamas", "Barbados", "Belize", "Dominica", "Grenada", "St. Kitts and Nevis", "St. Lucia", "St. Vincent and the Grenadines"],
-                    leader: "Adrian Johnston",
-                    allianceLeaders: [...allianceLeaders.servicenow.global, ...allianceLeaders.servicenow.apjLatam],
-                    hoverColor: "#E0FFE0"
-                }
+            'Europe West': {
+                leader: 'John Jostes',
+                title: 'Global Alliance Director',
+                photo: 'images/JohnJostes.jpg'
+            },
+            'UKI': {
+                leader: 'John Jostes',
+                title: 'Global Alliance Director',
+                photo: 'images/JohnJostes.jpg'
+            },
+            'Nordics + CESA': {
+                leader: 'John Jostes',
+                title: 'Global Alliance Director',
+                photo: 'images/JohnJostes.jpg'
+            },
+            'India + Africa': {
+                leader: 'Regional Leader',
+                title: 'Alliance Manager',
+                photo: 'images/AnindoDutta.jpg'
+            },
+            'Oceania': {
+                leader: 'Regional Leader',
+                title: 'Alliance Manager',
+                photo: 'images/AnindoDutta.jpg'
+            },
+            'MENA': {
+                leader: 'Regional Leader',
+                title: 'Alliance Manager',
+                photo: 'images/AnindoDutta.jpg'
+            },
+            'Greater China': {
+                leader: 'Regional Leader',
+                title: 'Alliance Manager',
+                photo: 'images/AnindoDutta.jpg'
+            },
+            'Japan + ASEAN + Korea': {
+                leader: 'Regional Leader',
+                title: 'Alliance Manager',
+                photo: 'images/AnindoDutta.jpg'
             }
         };
-
-        let currentView = 'all';
-        let currentPlot = null;
-
-        // Define distinct colors for EY Super Regions
-        const eyRegionColors = {
-            "US + LATAM + Israel": "#80B1D3", // Light Blue
-            "Canada": "#B3DE69", // Light Green
-            "Europe West + EUW FSO": "#FB8072", // Salmon
-            "UKI + UKI FSO": "#FDB462", // Orange
-            "Nordics + CESA + Nordics FSO": "#FCCDE5", // Pink
-            "India + Africa": "#BC80BD", // Purple
-            "Oceania + Oceania FSO": "#CCEBC5", // Mint Green
-            "MENA": "#FFED6F", // Light Yellow
-            "Greater China + FSO": "#8DD3C7", // Teal
-            "Japan + ASEAN + Korea + FSO": "#BEBADA" // Lavender
+        // Country to region mapping
+        const countryToRegions = {
+            // North America - US + LATAM + Israel
+            'United States': { servicenow: 'North America', ey: 'US + LATAM + Israel' },
+            'Mexico': { servicenow: 'North America', ey: 'US + LATAM + Israel' },
+            'Israel': { servicenow: 'EMEA', ey: 'US + LATAM + Israel' },
+            
+            // North America - Canada
+            'Canada': { servicenow: 'North America', ey: 'Canada' },
+            
+            // EMEA - Europe West
+            'France': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Germany': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Spain': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Italy': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Portugal': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Belgium': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Netherlands': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Luxembourg': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Switzerland': { servicenow: 'EMEA', ey: 'Europe West' },
+            'Austria': { servicenow: 'EMEA', ey: 'Europe West' },
+            
+            // EMEA - UKI
+            'United Kingdom': { servicenow: 'EMEA', ey: 'UKI' },
+            'Ireland': { servicenow: 'EMEA', ey: 'UKI' },
+            
+            // EMEA - Nordics + CESA
+            'Sweden': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Norway': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Finland': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Denmark': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Iceland': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Poland': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Czech Republic': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Slovakia': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Hungary': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Romania': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Bulgaria': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Croatia': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Serbia': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Slovenia': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Bosnia and Herzegovina': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Montenegro': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Albania': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'North Macedonia': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Greece': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Cyprus': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Malta': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Estonia': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Latvia': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            'Lithuania': { servicenow: 'EMEA', ey: 'Nordics + CESA' },
+            
+            // EMEA - MENA
+            'Egypt': { servicenow: 'EMEA', ey: 'MENA' },
+            'Saudi Arabia': { servicenow: 'EMEA', ey: 'MENA' },
+            'United Arab Emirates': { servicenow: 'EMEA', ey: 'MENA' },
+            'Qatar': { servicenow: 'EMEA', ey: 'MENA' },
+            'Kuwait': { servicenow: 'EMEA', ey: 'MENA' },
+            'Bahrain': { servicenow: 'EMEA', ey: 'MENA' },
+            'Oman': { servicenow: 'EMEA', ey: 'MENA' },
+            'Jordan': { servicenow: 'EMEA', ey: 'MENA' },
+            'Lebanon': { servicenow: 'EMEA', ey: 'MENA' },
+            'Iraq': { servicenow: 'EMEA', ey: 'MENA' },
+            'Yemen': { servicenow: 'EMEA', ey: 'MENA' },
+            'Syria': { servicenow: 'EMEA', ey: 'MENA' },
+            'Libya': { servicenow: 'EMEA', ey: 'MENA' },
+            'Tunisia': { servicenow: 'EMEA', ey: 'MENA' },
+            'Algeria': { servicenow: 'EMEA', ey: 'MENA' },
+            'Morocco': { servicenow: 'EMEA', ey: 'MENA' },
+            'Sudan': { servicenow: 'EMEA', ey: 'MENA' },
+            'Mauritania': { servicenow: 'EMEA', ey: 'MENA' },
+            
+            // EMEA - India + Africa
+            'India': { servicenow: 'APJ + LATAM', ey: 'India + Africa' },
+            'South Africa': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Nigeria': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Kenya': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Ghana': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Angola': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Ethiopia': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Tanzania': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Uganda': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Zambia': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Zimbabwe': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Mozambique': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Madagascar': { servicenow: 'EMEA', ey: 'India + Africa' },
+            'Mauritius': { servicenow: 'EMEA', ey: 'India + Africa' },
+            
+            // APJ + LATAM - Oceania
+            'Australia': { servicenow: 'APJ + LATAM', ey: 'Oceania' },
+            'New Zealand': { servicenow: 'APJ + LATAM', ey: 'Oceania' },
+            'Papua New Guinea': { servicenow: 'APJ + LATAM', ey: 'Oceania' },
+            'Fiji': { servicenow: 'APJ + LATAM', ey: 'Oceania' },
+            
+            // APJ + LATAM - Greater China
+            'China': { servicenow: 'APJ + LATAM', ey: 'Greater China' },
+            'Hong Kong': { servicenow: 'APJ + LATAM', ey: 'Greater China' },
+            'Taiwan': { servicenow: 'APJ + LATAM', ey: 'Greater China' },
+            'Macau': { servicenow: 'APJ + LATAM', ey: 'Greater China' },
+            
+            // APJ + LATAM - Japan + ASEAN + Korea
+            'Japan': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'South Korea': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Singapore': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Malaysia': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Indonesia': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Thailand': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Vietnam': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Philippines': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Brunei': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Cambodia': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Laos': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            'Myanmar': { servicenow: 'APJ + LATAM', ey: 'Japan + ASEAN + Korea' },
+            
+            // APJ + LATAM - US + LATAM + Israel (LATAM countries)
+            'Brazil': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Argentina': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Colombia': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Peru': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Chile': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Venezuela': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Ecuador': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Bolivia': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Paraguay': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Uruguay': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Guyana': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Suriname': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'French Guiana': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Guatemala': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Honduras': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'El Salvador': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Nicaragua': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Costa Rica': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Panama': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Cuba': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Dominican Republic': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Haiti': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' },
+            'Jamaica': { servicenow: 'APJ + LATAM', ey: 'US + LATAM + Israel' }
         };
-
-        // Define distinct colors for ServiceNow Regions
-        const servicenowRegionColors = {
-            "North America": "#66C2A5", // Greenish-blue
-            "EMEA": "#FC8D62", // Orange-red
-            "APJ + LATAM": "#8DA0CB" // Bluish-purple
+        // Regional colors
+        const regionColors = {
+            'North America': '#66C2A5',
+            'EMEA': '#FC8D62',
+            'APJ + LATAM': '#8DA0CB'
         };
-
-        function createMapData(view) {
-            const data = [];
-            
-            if (view === 'all' || view === 'ey') {
-                for (const [region, info] of Object.entries(regionData.ey)) {
-                    for (const country of info.countries) {
-                        data.push({
-                            Country: country,
-                            Organization: "EY",
-                            Region: region,
-                            Leader: info.leader,
-                            AllianceLeaders: info.allianceLeaders,
-                            Color: eyRegionColors[region],
-                            HoverColor: info.hoverColor
-                        });
-                    }
-                }
-            }
-            
-            if (view === 'all' || view === 'servicenow') {
-                for (const [region, info] of Object.entries(regionData.servicenow)) {
-                    for (const country of info.countries) {
-                        const existing = data.find(item => item.Country === country);
-                        if (existing && view === 'all') {
-                            // If a country is in both EY and ServiceNow, combine their alliance leaders
-                            existing.AllianceLeaders = [...existing.AllianceLeaders, ...info.allianceLeaders];
-                            // For 'all' view, if a country is in both, we'll prioritize EY's color for now, or could blend/pattern
-                            // For simplicity, we'll keep the first organization's color if 'all' view and country exists
-                        } else if (!existing) {
-                            data.push({
-                                Country: country,
-                                Organization: "ServiceNow",
-                                Region: region,
-                                Leader: info.leader,
-                                AllianceLeaders: info.allianceLeaders,
-                                Color: servicenowRegionColors[region],
-                                HoverColor: info.hoverColor
-                            });
-                        }
-                    }
-                }
-            }
-            
-            return data;
-        }
-
-        function createMap(view) {
-            try {
-                console.log('createMap: Starting for view:', view);
-                const mapData = createMapData(view);
-                console.log('createMap: Generated map data:', mapData);
-
-                if (!mapData || mapData.length === 0) {
-                    console.warn('createMap: No data to plot for view:', view);
-                    Plotly.purge('map'); // Clear any existing plot
-                    return;
-                }
-
-                let traces = [];
-
-                // Helper function to format alliance leaders for the custom tooltip
-                const formatAllianceLeadersHtml = (leaders) => {
-                    if (!leaders || leaders.length === 0) return '';
-                    let html = '<div class="alliance-leaders-title">Alliance Leaders:</div>';
-                    leaders.forEach(leader => {
-                        html += `<div class="leader-item"><div class="profile-pic-placeholder"></div><div class="leader-details"><div class="name">${leader.name}</div><div class="role">${leader.role}</div></div></div>`;
-                    });
-                    return html;
-                };
-
-                // Process EY regions
-                if (view === 'ey' || view === 'all') {
-                    const eyCountries = mapData.filter(d => d.Organization === 'EY');
-                    const eyRegions = {};
-                    eyCountries.forEach(d => {
-                        if (!eyRegions[d.Region]) {
-                            eyRegions[d.Region] = { countries: [], color: d.Color, hoverColor: d.HoverColor, leaders: [], allianceLeaders: [] };
-                        }
-                        eyRegions[d.Region].countries.push(d.Country);
-                        if (!eyRegions[d.Region].leaders.includes(d.Leader)) {
-                            eyRegions[d.Region].leaders.push(d.Leader);
-                        }
-                        d.AllianceLeaders.forEach(al => {
-                            if (!eyRegions[d.Region].allianceLeaders.some(existingAl => existingAl.name === al.name && existingAl.role === al.role)) {
-                                eyRegions[d.Region].allianceLeaders.push(al);
-                            }
-                        });
-                    });
-
-                    for (const regionName in eyRegions) {
-                        const regionInfo = eyRegions[regionName];
-                        traces.push({
-                            type: "choropleth",
-                            locations: regionInfo.countries,
-                            locationmode: "country names",
-                            z: Array(regionInfo.countries.length).fill(1), 
-                            colorscale: [[0, regionInfo.color], [1, regionInfo.color]],
-                            showscale: false,
-                            hoverinfo: 'none', // Crucial: skip default hoverinfo to use custom tooltip
-                            marker: { line: { color: 'black', width: 0.5 } },
-                            name: regionName + ' (EY)',
-                            customdata: regionInfo // Pass regionInfo directly as customdata
-                        });
-                    }
-                }
-
-                // Process ServiceNow regions
-                if (view === 'servicenow' || (view === 'all' && traces.length === 0)) { // Only add SN if no EY or if explicitly SN view
-                    const snCountries = mapData.filter(d => d.Organization === 'ServiceNow');
-                    const snRegions = {};
-                    snCountries.forEach(d => {
-                        if (!snRegions[d.Region]) {
-                            snRegions[d.Region] = { countries: [], color: d.Color, hoverColor: d.HoverColor, leaders: [], allianceLeaders: [] };
-                        }
-                        snRegions[d.Region].countries.push(d.Country);
-                        if (!snRegions[d.Region].leaders.includes(d.Leader)) {
-                            snRegions[d.Region].leaders.push(d.Leader);
-                        }
-                        d.AllianceLeaders.forEach(al => {
-                            if (!snRegions[d.Region].allianceLeaders.some(existingAl => existingAl.name === al.name && existingAl.role === al.role)) {
-                                snRegions[d.Region].allianceLeaders.push(al);
-                            }
-                        });
-                    });
-
-                    for (const regionName in snRegions) {
-                        const regionInfo = snRegions[regionName];
-                        traces.push({
-                            type: "choropleth",
-                            locations: regionInfo.countries,
-                            locationmode: "country names",
-                            z: Array(regionInfo.countries.length).fill(1), 
-                            colorscale: [[0, regionInfo.color], [1, regionInfo.color]],
-                            showscale: false,
-                            hoverinfo: 'none', // Crucial: skip default hoverinfo to use custom tooltip
-                            marker: { line: { color: 'black', width: 0.5 } },
-                            name: regionName + ' (ServiceNow)',
-                            customdata: regionInfo // Pass regionInfo directly as customdata
-                        });
-                    }
-                }
-
-                // If view is 'all' and both EY and ServiceNow data exist, create combined traces
-                if (view === 'all' && mapData.some(d => d.Organization === 'EY') && mapData.some(d => d.Organization === 'ServiceNow')) {
-                    traces = []; // Clear previous traces if both are to be shown together
-
-                    // EY regions
-                    const eyRegionsCombined = {};
-                    mapData.filter(d => d.Organization === 'EY').forEach(d => {
-                        if (!eyRegionsCombined[d.Region]) {
-                            eyRegionsCombined[d.Region] = { countries: [], color: d.Color, hoverColor: d.HoverColor, leaders: [], allianceLeaders: [] };
-                        }
-                        eyRegionsCombined[d.Region].countries.push(d.Country);
-                        if (!eyRegionsCombined[d.Region].leaders.includes(d.Leader)) {
-                            eyRegionsCombined[d.Region].leaders.push(d.Leader);
-                        }
-                        d.AllianceLeaders.forEach(al => {
-                            if (!eyRegionsCombined[d.Region].allianceLeaders.some(existingAl => existingAl.name === al.name && existingAl.role === al.role)) {
-                                eyRegionsCombined[d.Region].allianceLeaders.push(al);
-                            }
-                        });
-                    });
-
-                    for (const regionName in eyRegionsCombined) {
-                        const regionInfo = eyRegionsCombined[regionName];
-                        traces.push({
-                            type: "choropleth",
-                            locations: regionInfo.countries,
-                            locationmode: "country names",
-                            z: Array(regionInfo.countries.length).fill(1), 
-                            colorscale: [[0, regionInfo.color], [1, regionInfo.color]],
-                            showscale: false,
-                            hoverinfo: 'none', // Crucial: skip default hoverinfo to use custom tooltip
-                            marker: { line: { color: 'black', width: 0.5 } },
-                            name: regionName + ' (EY)',
-                            customdata: regionInfo // Pass regionInfo directly as customdata
-                        });
-                    }
-
-                    // ServiceNow regions
-                    const snRegionsCombined = {};
-                    mapData.filter(d => d.Organization === 'ServiceNow').forEach(d => {
-                        if (!snRegionsCombined[d.Region]) {
-                            snRegionsCombined[d.Region] = { countries: [], color: d.Color, hoverColor: d.HoverColor, leaders: [], allianceLeaders: [] };
-                        }
-                        snRegionsCombined[d.Region].countries.push(d.Country);
-                        if (!snRegionsCombined[d.Region].leaders.includes(d.Leader)) {
-                            snRegionsCombined[d.Region].leaders.push(d.Leader);
-                        }
-                        d.AllianceLeaders.forEach(al => {
-                            if (!snRegionsCombined[d.Region].allianceLeaders.some(existingAl => existingAl.name === al.name && existingAl.role === al.role)) {
-                                snRegionsCombined[d.Region].allianceLeaders.push(al);
-                            }
-                        });
-                    });
-
-                    for (const regionName in snRegionsCombined) {
-                        const regionInfo = snRegionsCombined[regionName];
-                        traces.push({
-                            type: "choropleth",
-                            locations: regionInfo.countries,
-                            locationmode: "country names",
-                            z: Array(regionInfo.countries.length).fill(1), 
-                            colorscale: [[0, regionInfo.color], [1, regionInfo.color]],
-                            showscale: false,
-                            hoverinfo: 'none', // Crucial: skip default hoverinfo to use custom tooltip
-                            marker: { line: { color: 'black', width: 0.5 } },
-                            name: regionName + ' (ServiceNow)',
-                            customdata: regionInfo // Pass regionInfo directly as customdata
-                        });
-                    }
-                }
-
-                const layout = {
-                    title: {
-                        text: '<b>EY - ServiceNow Alliance Map</b>',
-                        x: 0.5,
-                        font: { size: 24 }
-                    },
-                    geo: {
-                        showframe: false,
-                        showcoastlines: true,
-                        projection: { type: 'natural earth' },
-                        bgcolor: 'rgba(0,0,0,0)' 
-                    },
-                    margin: { t: 60, b: 0, l: 0, r: 0 },
-                    showlegend: false 
-                };
-
-                const config = {
-                    responsive: true,
-                    displayModeBar: false
-                };
-
-                Plotly.newPlot('map', traces, layout, config);
-                console.log('createMap: Map created successfully.');
-
-                // Custom tooltip handling
-                const mapDiv = document.getElementById('map');
-                const customTooltip = document.getElementById('custom-tooltip');
-
-                mapDiv.on('plotly_hover', function(data) {
-                    console.log('plotly_hover event triggered:', data);
-                    if (data.points && data.points.length > 0) {
-                        const point = data.points[0];
-                        console.log('Hovered point:', point);
-                        const countryName = point.location;
-                        // Access customdata directly from point.data.customdata
-                        const regionInfo = point.data.customdata; 
-
-                        if (!regionInfo) {
-                            console.error('regionInfo is undefined for hovered point:', point);
-                            customTooltip.style.display = 'none';
-                            return;
-                        }
-
-                        const org = regionInfo.Organization || (point.data.name.includes('(EY)') ? 'EY' : 'ServiceNow');
-                        const region = regionInfo.Region; 
-                        const regionalLeader = regionInfo.leader; 
-                        const allianceLeaders = regionInfo.allianceLeaders; 
-                        const hoverBgColor = regionInfo.hoverColor; 
-
-                        let tooltipHtml = `<div class="tooltip-header">${countryName}</div>`;
-                        tooltipHtml += `<div class="tooltip-section"><strong>Organization:</strong> ${org}</div>`;
-                        tooltipHtml += `<div class="tooltip-section"><strong>Region:</strong> ${region}</div>`;
-                        tooltipHtml += `<div class="tooltip-section"><strong>Regional Leader:</strong> ${regionalLeader}</div>`;
-
-                        if (allianceLeaders && allianceLeaders.length > 0) {
-                            tooltipHtml += formatAllianceLeadersHtml(allianceLeaders);
-                        }
-
-                        customTooltip.innerHTML = tooltipHtml;
-                        customTooltip.style.backgroundColor = hoverBgColor;
-                        customTooltip.style.display = 'block';
-
-                        // Position the tooltip
-                        const x = data.event.clientX + 10; // Add offset
-                        const y = data.event.clientY + 10; // Add offset
-                        customTooltip.style.left = `${x}px`;
-                        customTooltip.style.top = `${y}px`;
-                        console.log('Custom tooltip displayed.');
-                    } else {
-                        console.log('No points in hover data, hiding custom tooltip.');
-                        customTooltip.style.display = 'none'; // Hide if no points are hovered
-                    }
-                });
-
-                mapDiv.on('plotly_unhover', function() {
-                    console.log('plotly_unhover event triggered, hiding custom tooltip.');
-                    customTooltip.style.display = 'none';
-                });
-
-            } catch (error) {
-                console.error('createMap: Error creating map:', error);
-            }
-        }
-
-        function showEYRegions() {
-            currentView = 'ey';
-            createMap('ey');
-            updateButtonStates('ey');
-        }
-
-        function showServiceNowRegions() {
-            currentView = 'servicenow';
-            createMap('servicenow');
-            updateButtonStates('servicenow');
-        }
-
-        function showAllRegions() {
-            currentView = 'all';
-            createMap('all');
-            updateButtonStates('all');
-        }
-
-        function updateButtonStates(activeView) {
-            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
-            
-            if (activeView === 'ey') {
-                document.querySelector('.btn-ey').classList.add('active');
-            } else if (activeView === 'servicenow') {
-                document.querySelector('.btn-servicenow').classList.add('active');
-            } else if (activeView === 'all') {
-                document.querySelector('.btn-reset').classList.add('active');
-            }
-        }
-
         // Initialize the map
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOMContentLoaded: Initializing map.');
-            showAllRegions();
-        });
+        function initializeMap() {
+            const traces = [];
+            // Create traces for each country individually
+            Object.keys(countryToRegions).forEach(country => {
+                const regions = countryToRegions[country];
+                const servicenowRegion = regions.servicenow;
+                
+                traces.push({
+                    type: 'choropleth',
+                    locations: [country],
+                    locationmode: 'country names',
+                    z: [1],
+                    colorscale: [[0, regionColors[servicenowRegion]], [1, regionColors[servicenowRegion]]],
+                    showscale: false,
+                    hoverinfo: 'none',
+                    marker: { line: { color: 'white', width: 1 } },
+                    name: country,
+                    customdata: country
+                });
+            });
+            const layout = {
+                title: {
+                    text: '<b>EY & ServiceNow Alliance Map</b>',
+                    x: 0.5,
+                    font: { size: 28, color: 'white' }
+                },
+                geo: {
+                    showframe: false,
+                    showcoastlines: true,
+                    projection: { type: 'natural earth' },
+                    bgcolor: 'rgba(0,0,0,0)',
+                    showland: true,
+                    landcolor: 'rgb(243, 243, 243)',
+                    coastlinecolor: 'rgb(204, 204, 204)',
+                },
+                margin: { t: 80, b: 0, l: 0, r: 0 },
+                showlegend: false,
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)'
+            };
+            Plotly.newPlot('map', traces, layout, { responsive: true });
+            // Add hover event listeners
+            const mapDiv = document.getElementById('map');
+            let hoverTimeout;
+            let currentCard = null;
+            
+            mapDiv.on('plotly_hover', function(data) {
+                if (data.points && data.points.length > 0) {
+                    const point = data.points[0];
+                    const country = point.data.customdata;
+                    clearTimeout(hoverTimeout);
+                    showHoverCard(country, data.event.x, data.event.y);
+                }
+            });
+            mapDiv.on('plotly_unhover', function() {
+                hoverTimeout = setTimeout(() => {
+                    hideHoverCard();
+                }, 1000); // Increased delay to 1 second
+            });
+            // Keep hover card visible when mouse is over it
+            const hoverCard = document.getElementById('hoverCard');
+            hoverCard.addEventListener('mouseenter', function() {
+                clearTimeout(hoverTimeout);
+            });
+            
+            hoverCard.addEventListener('mouseleave', function() {
+                hoverTimeout = setTimeout(() => {
+                    hideHoverCard();
+                }, 300);
+            });
+        }
+        // Show hover card
+        function showHoverCard(country, x, y) {
+            const card = document.getElementById('hoverCard');
+            const regionNameEl = document.getElementById('regionName');
+            const servicenowContent = document.getElementById('servicenowContent');
+            const eyContent = document.getElementById('eyContent');
+            if (!countryToRegions[country]) return;
+            const regions = countryToRegions[country];
+            const servicenowRegion = regions.servicenow;
+            const eyRegion = regions.ey;
+            // Set region name to show the country being hovered
+            regionNameEl.textContent = country;
+            // Set ServiceNow content
+            const snData = servicenowLeaders[servicenowRegion];
+            let snLeadersHtml = `<div class="region-title-small">${servicenowRegion}</div>`;
+            
+            snData.forEach(leader => {
+                snLeadersHtml += `
+                    <div class="leader-info-inline">
+                        <img src="${leader.photo}" alt="${leader.name}" class="leader-photo-small" onerror="this.style.display='none'">
+                        <span class="leader-text">${leader.name} - ${leader.title}</span>
+                    </div>
+                `;
+            });
+            
+            servicenowContent.innerHTML = snLeadersHtml;
+            // Set EY content
+            const eyData = eyLeaders[eyRegion];
+            eyContent.innerHTML = `
+                <div class="region-title-small">${eyRegion}</div>
+                <div class="leader-info-inline">
+                    <img src="${eyData.photo}" alt="${eyData.leader}" class="leader-photo-small" onerror="this.style.display='none'">
+                    <span class="leader-text">${eyData.leader} - ${eyData.title}</span>
+                </div>
+            `;
+            // Show card first to get actual dimensions
+            card.style.display = 'block';
+            card.style.visibility = 'hidden';
+            
+            // Get actual card dimensions
+            const cardRect = card.getBoundingClientRect();
+            const cardWidth = cardRect.width;
+            const cardHeight = cardRect.height;
+            
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            // Position card anchored from middle-left side
+            let cardX = x + 15; // Small offset from cursor
+            let cardY = y - cardHeight / 2; // Center vertically with cursor
+            // Ensure card stays within viewport
+            if (cardX + cardWidth > viewportWidth - 20) {
+                cardX = x - cardWidth - 15; // Place to the left of cursor
+            }
+            if (cardY < 20) {
+                cardY = 20;
+            }
+            if (cardY + cardHeight > viewportHeight - 20) {
+                cardY = viewportHeight - cardHeight - 20;
+            }
+            // Apply final position and make visible
+            card.style.left = cardX + 'px';
+            card.style.top = cardY + 'px';
+            card.style.visibility = 'visible';
+            
+            // Trigger animation
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, 10);
+        }
+        // Hide hover card
+        function hideHoverCard() {
+            const card = document.getElementById('hoverCard');
+            card.classList.remove('visible');
+            setTimeout(() => {
+                card.style.display = 'none';
+            }, 300);
+        }
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeMap);
     </script>
 </body>
 </html>
