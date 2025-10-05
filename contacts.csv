@@ -1,0 +1,29 @@
+Company,Name,Title,Email,Photo,ServiceNow_Region,EY_Region,Show_On_Map,Show_On_Contact_Page
+ServiceNow,Mark Bagley,Global Partner Leader,mark.bagley@servicenow.com,MarkBagley.jpg,North America,,Yes,Yes
+ServiceNow,Christie Rice,Global Partner Manager,christie.rice@servicenow.com,ChristieRice.jpg,North America,,Yes,Yes
+ServiceNow,Jon O'Beirne,Partner Technology Strategist,,JonOBeirne.png,North America,,Yes,Yes
+ServiceNow,Kevin Dineen,Partner Manager (MFG HCLS Retail),,KevinDineen.png,North America,,Yes,Yes
+ServiceNow,Mark Folit,Partner Manager (FSO TMT),,MarkFolit.jpg,North America,,Yes,Yes
+ServiceNow,Tim Holmes,Partner Manager (GPS),,MarkBagley.jpg,North America,,Yes,Yes
+ServiceNow,Sam Siam,Global Partner Seller (Built On),,SamSiam.jpg,North America,,Yes,Yes
+ServiceNow,Julien Charpentier,Partner Manager,julien.charpentier@servicenow.com,JulienCharpentier.png,EMEA,,Yes,Yes
+ServiceNow,Bernhard Schwemmer,Partner Manager (Germany),bernhard.schwemmer@servicenow.com,BernhardSchwemmer.jpg,EMEA,,Yes,Yes
+ServiceNow,Craig Wood,Partner Manager (UKI),craig.wood@servicenow.com,ChristieRice.jpg,EMEA,,Yes,Yes
+ServiceNow,Petros Papakostas,Partner Technology Strategist (EMEA),petros.papakostas@servicenow.com,PetrosPapakostas.png,EMEA,,Yes,Yes
+ServiceNow,Olivia Hambert,Partner Technology Strategist (MENA),,ChristieRice.jpg,EMEA,,Yes,Yes
+ServiceNow,Martin McBryde,Partner Technology Strategist (UKI),,MartinMcBryde.jpg,EMEA,,Yes,Yes
+ServiceNow,Michelle Mitchelhill,Partner Manager (ANZ),,MichelleMitchellhill.png,APJ + LATAM,,Yes,Yes
+ServiceNow,Rob O'Leary,Partner Technology Strategist (ANZ),,RobOLeary.png,APJ + LATAM,,Yes,Yes
+EY,Anindo Dutta,Global Alliance Leader,,AnindoDutta.jpg,,Canada,Yes,Yes
+EY,John Jostes,Global Alliance Director,John.Jostes@ey.com,JohnJostes.jpg,,Europe West,Yes,Yes
+EY,Maria Saggesse,Global and EMEIA GBS Solution Leader,maria.saggese@nl.ey.com,MariaSaggesse.png,,Europe West,Yes,Yes
+EY,Dominik Loerts,Partner for AI & Data and ServiceNow,Dominik.Loerts@de.ey.com,DominikLoerts.png,,Europe West,Yes,Yes
+EY,Kaspar Schlüer,Global Solutions & Offerings,kaspar.schlueer@ch.ey.com,KasparSchluer.png,,Europe West,Yes,Yes
+EY,John Jostes,Global Alliance Director,John.Jostes@ey.com,JohnJostes.jpg,,UKI,Yes,Yes
+EY,Sarah Conway,Director,sarah.conway@uk.ey.com,SarahConway.png,,UKI,Yes,Yes
+EY,Adam Woodhouse,Tech Transformation Partner (FS),Adam.Woodhouse@uk.ey.com,AdamWoodhouse.png,,UKI,Yes,Yes
+EY,Chris Fowler,Tech Consulting Manager,Chris.Fowler@uk.ey.com,ChrisFowler.jpg,,UKI,Yes,Yes
+EY,John Jostes,Global Alliance Director,John.Jostes@ey.com,JohnJostes.jpg,,Nordics + CESA,Yes,Yes
+EY,Magnus Pedersen,Tech Strategy and Transformation | Nordic,Magnus.Pedersen@no.ey.com,MagnusPedersen.png,,Nordics + CESA,Yes,Yes
+EY,Emad Mustafa,Partner - MENA Technology Consulting,Emad.Mustafa@sa.ey.com,EmadMustafa.png,,MENA,Yes,Yes
+EY,Abdalla Amara,Partner - EY MENA Consulting,Abdalla.Amara@sa.ey.com,AbdallaAmara.png,,MENA,Yes,Yes

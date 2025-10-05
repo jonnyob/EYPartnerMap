@@ -9,8 +9,8 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
             height: 100vh;
             overflow: hidden;
         }
@@ -23,6 +23,10 @@
             position: absolute;
             top: 20px;
             z-index: 1000;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
         .logo-left {
             left: 20px;
@@ -33,10 +37,7 @@
         .logo-container img {
             height: 48px;
             width: auto;
-            background: white;
-            padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
         }
         #map {
             width: 100%;
@@ -45,17 +46,17 @@
         .hover-card {
             position: absolute;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
             padding: 0;
             z-index: 1001;
             display: none;
             min-width: 600px;
             max-width: 800px;
             font-size: 18px;
-            border: 2px solid #e0e0e0;
+            border: 1px solid #e5e7eb;
             transition: all 0.3s ease;
-            transform: scale(0.9);
+            transform: scale(0.95);
             opacity: 0;
         }
         .hover-card.visible {
@@ -131,10 +132,11 @@
             position: absolute;
             bottom: 20px;
             left: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
             z-index: 1000;
             max-width: 450px;
         }
@@ -180,10 +182,11 @@
             position: absolute;
             bottom: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
             z-index: 1000;
             max-width: 250px;
         }
@@ -248,12 +251,12 @@
             border-radius: 6px;
         }
         .servicenow-header {
-            background-color: #28A745;
+            background-color: #62D84E;
             color: white;
         }
         .ey-header {
-            background-color: #FFD700;
-            color: #333;
+            background-color: #FFE600;
+            color: #1C1F21;
         }
         
         .button-container {
@@ -262,15 +265,15 @@
             left: 180px;
             z-index: 1000;
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
         
         .ey-button {
             height: 48px;
-            padding: 6px 12px;
-            background: linear-gradient(135deg, #28A745 0%, #20C997 100%);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            padding: 8px 20px;
+            background: #62D84E;
+            border-radius: 24px;
+            box-shadow: 0 2px 8px rgba(98, 216, 78, 0.3);
             text-decoration: none;
             color: white;
             font-weight: 600;
@@ -279,18 +282,17 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            border: 1px solid #1E7E34;
-            min-width: 90px;
+            border: none;
+            min-width: 100px;
             text-align: center;
             line-height: 1.2;
         }
         
         .ey-button:hover {
-            background: linear-gradient(135deg, #20C997 0%, #17A2B8 100%);
+            background: #4BC239;
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(32, 201, 151, 0.4);
-            border-color: #17A2B8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(98, 216, 78, 0.4);
         }
     </style>
 </head>
@@ -300,9 +302,9 @@
             <img src="images/EYLogo.png" alt="EY Logo">
         </div>
         <div class="button-container">
-            <a href="#" class="ey-button">Now Talks</a>
+            <a href="nowtalks.html" class="ey-button">Now Talks</a>
             <a href="#" class="ey-button">Solutions &<br>Offerings</a>
-            <a href="#" class="ey-button">Contact Info</a>
+            <a href="contact.html" class="ey-button">Contact Info</a>
         </div>
         <div class="logo-container logo-right">
             <img src="images/ServiceNowLogo.png" alt="ServiceNow Logo">
@@ -456,56 +458,45 @@
         };
         // EY Regional Leaders
         const eyLeaders = {
-            'US + LATAM + Israel': {
-                leader: 'Anindo Dutta',
-                title: 'Global Alliance Leader',
-                photo: 'images/AnindoDutta.jpg'
-            },
-            'Canada': {
-                leader: 'Anindo Dutta',
-                title: 'Global Alliance Leader',
-                photo: 'images/AnindoDutta.jpg'
-            },
-            'Europe West': {
-                leader: 'John Jostes',
-                title: 'Global Alliance Director',
-                photo: 'images/JohnJostes.jpg'
-            },
-            'UKI': {
-                leader: 'John Jostes',
-                title: 'Global Alliance Director',
-                photo: 'images/JohnJostes.jpg'
-            },
-            'Nordics + CESA': {
-                leader: 'John Jostes',
-                title: 'Global Alliance Director',
-                photo: 'images/JohnJostes.jpg'
-            },
-            'India + Africa': {
-                leader: 'Regional Leader',
-                title: 'Alliance Manager',
-                photo: 'images/AnindoDutta.jpg'
-            },
-            'Oceania': {
-                leader: 'Regional Leader',
-                title: 'Alliance Manager',
-                photo: 'images/AnindoDutta.jpg'
-            },
-            'MENA': {
-                leader: 'Regional Leader',
-                title: 'Alliance Manager',
-                photo: 'images/AnindoDutta.jpg'
-            },
-            'Greater China': {
-                leader: 'Regional Leader',
-                title: 'Alliance Manager',
-                photo: 'images/AnindoDutta.jpg'
-            },
-            'Japan + ASEAN + Korea': {
-                leader: 'Regional Leader',
-                title: 'Alliance Manager',
-                photo: 'images/AnindoDutta.jpg'
-            }
+            'US + LATAM + Israel': [
+                { name: 'Anindo Dutta', title: 'Global Alliance Leader', photo: 'images/AnindoDutta.jpg' }
+            ],
+            'Canada': [
+                { name: 'Anindo Dutta', title: 'Global Alliance Leader', photo: 'images/AnindoDutta.jpg' }
+            ],
+            'Europe West': [
+                { name: 'John Jostes', title: 'Global Alliance Director', photo: 'images/JohnJostes.jpg' },
+                { name: 'Maria Saggesse', title: 'Global and EMEIA GBS Solution Leader', photo: 'images/MariaSaggesse.png' },
+                { name: 'Dominik Loerts', title: 'Partner for AI & Data and ServiceNow', photo: 'images/DominikLoerts.png' },
+                { name: 'Kaspar Schlüer', title: 'Global Solutions & Offerings', photo: 'images/KasparSchluer.png' }
+            ],
+            'UKI': [
+                { name: 'John Jostes', title: 'Global Alliance Director', photo: 'images/JohnJostes.jpg' },
+                { name: 'Sarah Conway', title: 'Director', photo: 'images/SarahConway.png' },
+                { name: 'Adam Woodhouse', title: 'Tech Transformation Partner (FS)', photo: 'images/AdamWoodhouse.png' },
+                { name: 'Chris Fowler', title: 'Tech Consulting Manager', photo: 'images/ChrisFowler.jpg' }
+            ],
+            'Nordics + CESA': [
+                { name: 'John Jostes', title: 'Global Alliance Director', photo: 'images/JohnJostes.jpg' },
+                { name: 'Magnus Pedersen', title: 'Tech Strategy and Transformation | Nordic', photo: 'images/MagnusPedersen.png' }
+            ],
+            'India + Africa': [
+                { name: 'Regional Leader', title: 'Alliance Manager', photo: 'images/AnindoDutta.jpg' }
+            ],
+            'Oceania': [
+                { name: 'Regional Leader', title: 'Alliance Manager', photo: 'images/AnindoDutta.jpg' }
+            ],
+            'MENA': [
+                { name: 'Regional Leader', title: 'Alliance Manager', photo: 'images/AnindoDutta.jpg' },
+                { name: 'Emad Mustafa', title: 'Partner - MENA Technology Consulting', photo: 'images/EmadMustafa.png' },
+                { name: 'Abdalla Amara', title: 'Partner - EY MENA Consulting', photo: 'images/AbdallaAmara.png' }
+            ],
+            'Greater China': [
+                { name: 'Regional Leader', title: 'Alliance Manager', photo: 'images/AnindoDutta.jpg' }
+            ],
+            'Japan + ASEAN + Korea': [
+                { name: 'Regional Leader', title: 'Alliance Manager', photo: 'images/AnindoDutta.jpg' }
+            ]
         };
         // Country to region mapping
         const countryToRegions = {
@@ -675,9 +666,12 @@
             });
             const layout = {
                 title: {
-                    text: '<b>EY & ServiceNow Alliance Map</b>',
+                    text: '<b>EY & ServiceNow<br>Alliance Map</b>',
                     x: 0.5,
-                    font: { size: 28, color: 'white' }
+                    xanchor: 'center',
+                    y: 0.95,
+                    yanchor: 'top',
+                    font: { size: 28, color: '#1C1F21', family: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif' }
                 },
                 geo: {
                     showframe: false,
@@ -685,8 +679,8 @@
                     projection: { type: 'natural earth' },
                     bgcolor: 'rgba(0,0,0,0)',
                     showland: true,
-                    landcolor: 'rgb(243, 243, 243)',
-                    coastlinecolor: 'rgb(204, 204, 204)',
+                    landcolor: 'rgb(255, 255, 255)',
+                    coastlinecolor: 'rgb(200, 200, 200)',
                 },
                 margin: { t: 80, b: 0, l: 0, r: 0 },
                 showlegend: false,
@@ -752,13 +746,18 @@
             servicenowContent.innerHTML = snLeadersHtml;
             // Set EY content
             const eyData = eyLeaders[eyRegion];
-            eyContent.innerHTML = `
-                <div class="region-title-small">${eyRegion}</div>
-                <div class="leader-info-inline">
-                    <img src="${eyData.photo}" alt="${eyData.leader}" class="leader-photo-small" onerror="this.style.display='none'">
-                    <span class="leader-text">${eyData.leader} - ${eyData.title}</span>
-                </div>
-            `;
+            let eyLeadersHtml = `<div class="region-title-small">${eyRegion}</div>`;
+            
+            eyData.forEach(leader => {
+                eyLeadersHtml += `
+                    <div class="leader-info-inline">
+                        <img src="${leader.photo}" alt="${leader.name}" class="leader-photo-small" onerror="this.style.display='none'">
+                        <span class="leader-text">${leader.name} - ${leader.title}</span>
+                    </div>
+                `;
+            });
+            
+            eyContent.innerHTML = eyLeadersHtml;
             // Show card first to get actual dimensions
             card.style.display = 'block';
             card.style.visibility = 'hidden';

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Info - EY & ServiceNow Alliance</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            min-height: 100vh;
+        }
+        .header {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo-container img {
+            height: 48px;
+            width: auto;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        .button-container {
+            display: flex;
+            gap: 12px;
+            margin-left: 30px;
+        }
+        .nav-button {
+            height: 48px;
+            padding: 8px 20px;
+            background: #62D84E;
+            border-radius: 24px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: none;
+            min-width: 100px;
+            text-align: center;
+            line-height: 1.2;
+            box-shadow: 0 2px 8px rgba(98, 216, 78, 0.3);
+        }
+        .nav-button:hover {
+            background: #4BC239;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(98, 216, 78, 0.4);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        .page-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: #1C1F21;
+            margin-bottom: 50px;
+            letter-spacing: -0.5px;
+        }
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .column {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e7eb;
+        }
+        .column-header {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 4px solid;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+        .servicenow-header {
+            color: #62D84E;
+            border-color: #62D84E;
+        }
+        .ey-header {
+            color: #FFE600;
+            border-color: #FFE600;
+        }
+        .region-section {
+            margin-bottom: 35px;
+            padding: 24px;
+            background: #fafbfc;
+            border-radius: 12px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .region-section:hover {
+            background: #f5f7fa;
+            transform: translateX(4px);
+        }
+        .region-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1C1F21;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .servicenow-header ~ .region-section {
+            border-left-color: #62D84E;
+        }
+        .servicenow-header ~ .region-section .region-title {
+            background: linear-gradient(135deg, #E8FAE4 0%, #D4F4CE 100%);
+            color: #2D5016;
+        }
+        .ey-header ~ .region-section {
+            border-left-color: #FFE600;
+        }
+        .ey-region-title {
+            background: linear-gradient(135deg, #FFFBE6 0%, #FFF4B3 100%) !important;
+            color: #6B5E00 !important;
+        }
+        .contact-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e7eb;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .contact-item:hover {
+            padding-left: 8px;
+        }
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+        .contact-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        .contact-details {
+            flex: 1;
+        }
+        .contact-name {
+            font-weight: 600;
+            color: #1C1F21;
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+        .contact-title {
+            color: #6B7280;
+            font-size: 14px;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        .contact-email {
+            color: #62D84E;
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .contact-email:hover {
+            color: #4BC239;
+            text-decoration: underline;
+        }
+        .mapping-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="images/EYLogo.png" alt="EY Logo">
+            <div class="button-container">
+                <a href="index.html" class="nav-button">Map</a>
+                <a href="nowtalks.html" class="nav-button">Now Talks</a>
+                <a href="#" class="nav-button">Solutions &<br>Offerings</a>
+                <a href="contact.html" class="nav-button">Contact Info</a>
+            </div>
+        </div>
+        <div class="logo-container">
+            <img src="images/ServiceNowLogo.png" alt="ServiceNow Logo">
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">Alliance Contact Info</h1>
+
+        <div class="contacts-grid">
+            <!-- ServiceNow Column -->
+            <div class="column">
+                <h2 class="column-header servicenow-header">ServiceNow Contacts</h2>
+
+                <!-- Global Alliance Leaders -->
+                <div class="region-section">
+                    <div class="region-title">Global Alliance Leaders</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/MarkBagley.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Mark Bagley">
+                        <div class="contact-details">
+                            <div class="contact-name">Mark Bagley</div>
+                            <div class="contact-title">Global Partner Leader</div>
+                            <a href="mailto:mark.bagley@servicenow.com" class="contact-email">mark.bagley@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/ChristieRice.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Christie Rice">
+                        <div class="contact-details">
+                            <div class="contact-name">Christie Rice</div>
+                            <div class="contact-title">Global Partner Manager</div>
+                            <a href="mailto:christie.rice@servicenow.com" class="contact-email">christie.rice@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/JonOBeirne.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Jon O'Beirne">
+                        <div class="contact-details">
+                            <div class="contact-name">Jon O'Beirne</div>
+                            <div class="contact-title">Partner Technology Strategist</div>
+                            <a href="mailto:Jon.OBeirne@servicenow.com" class="contact-email">Jon.OBeirne@servicenow.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- North America -->
+                <div class="region-section">
+                    <div class="region-title">North America</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/MarkBagley.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Mark Bagley">
+                        <div class="contact-details">
+                            <div class="contact-name">Mark Bagley</div>
+                            <div class="contact-title">Global Partner Leader</div>
+                            <a href="mailto:mark.bagley@servicenow.com" class="contact-email">mark.bagley@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/ChristieRice.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Christie Rice">
+                        <div class="contact-details">
+                            <div class="contact-name">Christie Rice</div>
+                            <div class="contact-title">Global Partner Manager</div>
+                            <a href="mailto:christie.rice@servicenow.com" class="contact-email">christie.rice@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/JonOBeirne.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Jon O'Beirne">
+                        <div class="contact-details">
+                            <div class="contact-name">Jon O'Beirne</div>
+                            <div class="contact-title">Partner Technology Strategist</div>
+                            <a href="mailto:Jon.OBeirne@servicenow.com" class="contact-email">Jon.OBeirne@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/KevinDineen.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Kevin Dineen">
+                        <div class="contact-details">
+                            <div class="contact-name">Kevin Dineen</div>
+                            <div class="contact-title">Partner Manager (MFG, HCLS, Retail)</div>
+                            <a href="mailto:kevin.dineen@servicenow.com" class="contact-email">kevin.dineen@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/MarkFolit.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Mark Folit">
+                        <div class="contact-details">
+                            <div class="contact-name">Mark Folit</div>
+                            <div class="contact-title">Partner Manager (FSO, TMT)</div>
+                            <a href="mailto:mark.folit@servicenow.com" class="contact-email">mark.folit@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/placeholder.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Tim Holmes">
+                        <div class="contact-details">
+                            <div class="contact-name">Tim Holmes</div>
+                            <div class="contact-title">Partner Manager (GPS)</div>
+                            <a href="mailto:timothy.holmes@servicenow.com" class="contact-email">timothy.holmes@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/SamSiam.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Sam Siam">
+                        <div class="contact-details">
+                            <div class="contact-name">Sam Siam</div>
+                            <div class="contact-title">Global Partner Seller (Built On)</div>
+                            <a href="mailto:hussam.siam@servicenow.com" class="contact-email">hussam.siam@servicenow.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EMEA -->
+                <div class="region-section">
+                    <div class="region-title">EMEA</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/JulienCharpentier.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Julien Charpentier">
+                        <div class="contact-details">
+                            <div class="contact-name">Julien Charpentier</div>
+                            <div class="contact-title">Partner Manager</div>
+                            <a href="mailto:julien.charpentier@servicenow.com" class="contact-email">julien.charpentier@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/BernhardSchwemmer.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Bernhard Schwemmer">
+                        <div class="contact-details">
+                            <div class="contact-name">Bernhard Schwemmer</div>
+                            <div class="contact-title">Partner Manager (Germany)</div>
+                            <a href="mailto:bernhard.schwemmer@servicenow.com" class="contact-email">bernhard.schwemmer@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/placeholder.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Craig Wood">
+                        <div class="contact-details">
+                            <div class="contact-name">Craig Wood</div>
+                            <div class="contact-title">Partner Manager (UKI)</div>
+                            <a href="mailto:craig.wood@servicenow.com" class="contact-email">craig.wood@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/PetrosPapakostas.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Petros Papakostas">
+                        <div class="contact-details">
+                            <div class="contact-name">Petros Papakostas</div>
+                            <div class="contact-title">Partner Technology Strategist (EMEA)</div>
+                            <a href="mailto:petros.papakostas@servicenow.com" class="contact-email">petros.papakostas@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/placeholder.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Olivia Hambert">
+                        <div class="contact-details">
+                            <div class="contact-name">Olivia Hambert</div>
+                            <div class="contact-title">Partner Technology Strategist (MENA)</div>
+                            <a href="mailto:olivia.hambert@servicenow.com" class="contact-email">olivia.hambert@servicenow.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/MartinMcBryde.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Martin McBryde">
+                        <div class="contact-details">
+                            <div class="contact-name">Martin McBryde</div>
+                            <div class="contact-title">Partner Technology Strategist (UKI)</div>
+                            <a href="mailto:martin.mcbryde@servicenow.com" class="contact-email">martin.mcbryde@servicenow.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- APJ + LATAM -->
+                <div class="region-section">
+                    <div class="region-title">APJ + LATAM</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/MichelleMitchellhill.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Michelle Mitchelhill">
+                        <div class="contact-details">
+                            <div class="contact-name">Michelle Mitchelhill</div>
+                            <div class="contact-title">Partner Manager (ANZ)</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/RobOLeary.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Rob O'Leary">
+                        <div class="contact-details">
+                            <div class="contact-name">Rob O'Leary</div>
+                            <div class="contact-title">Partner Technology Strategist (ANZ)</div>
+                            <a href="mailto:rob.oleary@servicenow.com" class="contact-email">rob.oleary@servicenow.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EY Column -->
+            <div class="column">
+                <h2 class="column-header ey-header">EY Contacts</h2>
+
+                <!-- Global Alliance Leaders -->
+                <div class="region-section">
+                    <div class="region-title ey-region-title">Global Alliance Leaders</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/AnindoDutta.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Anindo Dutta">
+                        <div class="contact-details">
+                            <div class="contact-name">Anindo Dutta</div>
+                            <div class="contact-title">Global Alliance Leader</div>
+                            <a href="mailto:anindo.dutta1@ey.com" class="contact-email">anindo.dutta1@ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/JohnJostes.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="John Jostes">
+                        <div class="contact-details">
+                            <div class="contact-name">John Jostes</div>
+                            <div class="contact-title">Global Alliance Director</div>
+                            <a href="mailto:John.Jostes@ey.com" class="contact-email">John.Jostes@ey.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canada and US + LATAM (maps to EMEA) -->
+                <div class="region-section">
+                    <div class="region-title ey-region-title">Canada</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/AnindoDutta.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Anindo Dutta">
+                        <div class="contact-details">
+                            <div class="contact-name">Anindo Dutta</div>
+                            <div class="contact-title">Global Alliance Leader</div>
+                            <a href="mailto:anindo.dutta1@ey.com" class="contact-email">anindo.dutta1@ey.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-section">
+                    <div class="region-title ey-region-title">US + LATAM + Israel</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/AnindoDutta.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Anindo Dutta">
+                        <div class="contact-details">
+                            <div class="contact-name">Anindo Dutta</div>
+                            <div class="contact-title">Global Alliance Leader</div>
+                            <a href="mailto:anindo.dutta1@ey.com" class="contact-email">anindo.dutta1@ey.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Europe West, UKI, MENA, Nordics (maps to North America) -->
+                <div class="region-section">
+                    <div class="region-title ey-region-title">Europe West</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/JohnJostes.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="John Jostes">
+                        <div class="contact-details">
+                            <div class="contact-name">John Jostes</div>
+                            <div class="contact-title">Global Alliance Director</div>
+                            <a href="mailto:John.Jostes@ey.com" class="contact-email">John.Jostes@ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/MariaSaggesse.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Maria Saggesse">
+                        <div class="contact-details">
+                            <div class="contact-name">Maria Saggesse</div>
+                            <div class="contact-title">Global and EMEIA GBS Solution Leader</div>
+                            <a href="mailto:maria.saggese@nl.ey.com" class="contact-email">maria.saggese@nl.ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/DominikLoerts.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Dominik Loerts">
+                        <div class="contact-details">
+                            <div class="contact-name">Dominik Loerts</div>
+                            <div class="contact-title">Partner for AI & Data and ServiceNow</div>
+                            <a href="mailto:Dominik.Loerts@de.ey.com" class="contact-email">Dominik.Loerts@de.ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/KasparSchluer.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Kaspar Schlüer">
+                        <div class="contact-details">
+                            <div class="contact-name">Kaspar Schlüer</div>
+                            <div class="contact-title">Global Solutions & Offerings</div>
+                            <a href="mailto:kaspar.schlueer@ch.ey.com" class="contact-email">kaspar.schlueer@ch.ey.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-section">
+                    <div class="region-title ey-region-title">UKI</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/JohnJostes.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="John Jostes">
+                        <div class="contact-details">
+                            <div class="contact-name">John Jostes</div>
+                            <div class="contact-title">Global Alliance Director</div>
+                            <a href="mailto:John.Jostes@ey.com" class="contact-email">John.Jostes@ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/SarahConway.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Sarah Conway">
+                        <div class="contact-details">
+                            <div class="contact-name">Sarah Conway</div>
+                            <div class="contact-title">Director</div>
+                            <a href="mailto:sarah.conway@uk.ey.com" class="contact-email">sarah.conway@uk.ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/AdamWoodhouse.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Adam Woodhouse">
+                        <div class="contact-details">
+                            <div class="contact-name">Adam Woodhouse</div>
+                            <div class="contact-title">Tech Transformation Partner (FS)</div>
+                            <a href="mailto:Adam.Woodhouse@uk.ey.com" class="contact-email">Adam.Woodhouse@uk.ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/ChrisFowler.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Chris Fowler">
+                        <div class="contact-details">
+                            <div class="contact-name">Chris Fowler</div>
+                            <div class="contact-title">Tech Consulting Manager</div>
+                            <a href="mailto:Chris.Fowler@uk.ey.com" class="contact-email">Chris.Fowler@uk.ey.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-section">
+                    <div class="region-title ey-region-title">MENA</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/EmadMustafa.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Emad Mustafa">
+                        <div class="contact-details">
+                            <div class="contact-name">Emad Mustafa</div>
+                            <div class="contact-title">Partner - MENA Technology Consulting</div>
+                            <a href="mailto:Emad.Mustafa@sa.ey.com" class="contact-email">Emad.Mustafa@sa.ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/AbdallaAmara.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Abdalla Amara">
+                        <div class="contact-details">
+                            <div class="contact-name">Abdalla Amara</div>
+                            <div class="contact-title">Partner - EY MENA Consulting</div>
+                            <a href="mailto:Abdalla.Amara@sa.ey.com" class="contact-email">Abdalla.Amara@sa.ey.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-section">
+                    <div class="region-title ey-region-title">Nordics + CESA</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/JohnJostes.jpg" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="John Jostes">
+                        <div class="contact-details">
+                            <div class="contact-name">John Jostes</div>
+                            <div class="contact-title">Global Alliance Director</div>
+                            <a href="mailto:John.Jostes@ey.com" class="contact-email">John.Jostes@ey.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/MagnusPedersen.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Magnus Pedersen">
+                        <div class="contact-details">
+                            <div class="contact-name">Magnus Pedersen</div>
+                            <div class="contact-title">Tech Strategy and Transformation | Nordic</div>
+                            <a href="mailto:Magnus.Pedersen@no.ey.com" class="contact-email">Magnus.Pedersen@no.ey.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- India + Africa, Japan + ASEAN, Greater China (maps to APJ + LATAM) -->
+                <div class="region-section">
+                    <div class="region-title ey-region-title">India + Africa</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/placeholder.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Regional Leader">
+                        <div class="contact-details">
+                            <div class="contact-name">Regional Leader</div>
+                            <div class="contact-title">Alliance Manager</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-section">
+                    <div class="region-title ey-region-title">Oceania</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/placeholder.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Regional Leader">
+                        <div class="contact-details">
+                            <div class="contact-name">Regional Leader</div>
+                            <div class="contact-title">Alliance Manager</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-section">
+                    <div class="region-title ey-region-title">Greater China</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/placeholder.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Regional Leader">
+                        <div class="contact-details">
+                            <div class="contact-name">Regional Leader</div>
+                            <div class="contact-title">Alliance Manager</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-section">
+                    <div class="region-title ey-region-title">Japan + ASEAN + Korea</div>
+                    <div class="contact-item">
+                        <img class="contact-photo" src="images/placeholder.png" onerror="this.onerror=null;this.src='images/placeholder.png'" alt="Regional Leader">
+                        <div class="contact-details">
+                            <div class="contact-name">Regional Leader</div>
+                            <div class="contact-title">Alliance Manager</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
