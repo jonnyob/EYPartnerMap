@@ -31,10 +31,10 @@
             right: 20px;
         }
         .logo-container img {
-            height: 60px;
+            height: 48px;
             width: auto;
             background: white;
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
@@ -259,34 +259,38 @@
         .button-container {
             position: absolute;
             top: 20px;
-            left: 150px;
+            left: 130px;
             z-index: 1000;
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
         
         .ey-button {
-            height: 60px;
-            padding: 10px 20px;
-            background: white;
+            height: 48px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #28A745 0%, #20C997 100%);
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
             text-decoration: none;
-            color: #333;
-            font-weight: bold;
+            color: white;
+            font-weight: 600;
             font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            border: 2px solid #FFD700;
+            border: 1px solid #1E7E34;
+            min-width: 90px;
+            text-align: center;
+            line-height: 1.2;
         }
         
         .ey-button:hover {
-            background: #FFD700;
-            color: #333;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #20C997 0%, #17A2B8 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(32, 201, 151, 0.4);
+            border-color: #17A2B8;
         }
     </style>
 </head>
@@ -297,7 +301,7 @@
         </div>
         <div class="button-container">
             <a href="#" class="ey-button">Now Talks</a>
-            <a href="#" class="ey-button">EY Solutions & Offerings</a>
+            <a href="#" class="ey-button">Solutions &<br>Offerings</a>
             <a href="#" class="ey-button">Contact Info</a>
         </div>
         <div class="logo-container logo-right">
@@ -440,7 +444,7 @@
                 { name: 'Julien Charpentier', title: 'Partner Manager', photo: 'images/JulienCharpentier.png' },
                 { name: 'Bernhard Schwemmer', title: 'Partner Manager (Germany)', photo: 'images/BernhardSchwemmer.jpg' },
                 { name: 'Craig Wood', title: 'Partner Manager (UKI)', photo: 'images/ChristieRice.jpg' },
-                { name: 'Petros Papakostas', title: 'Partner Technology Strategist (EMEA)', photo: 'images/PetrosPapakostas.jpg' },
+                { name: 'Petros Papakostas', title: 'Partner Technology Strategist (EMEA)', photo: 'images/PetrosPapakostas.png' },
                 { name: 'Olivia Hambert', title: 'Partner Technology Strategist (MENA)', photo: 'images/ChristieRice.jpg' },
                 { name: 'Martin McBryde', title: 'Partner Technology Strategist (UKI)', photo: 'images/MartinMcBryde.jpg' }
             ],
