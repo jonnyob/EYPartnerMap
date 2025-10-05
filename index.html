@@ -255,12 +255,50 @@
             background-color: #FFD700;
             color: #333;
         }
+        
+        .button-container {
+            position: absolute;
+            top: 20px;
+            left: 150px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .ey-button {
+            height: 60px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 2px solid #FFD700;
+        }
+        
+        .ey-button:hover {
+            background: #FFD700;
+            color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo-container logo-left">
             <img src="images/EYLogo.png" alt="EY Logo">
+        </div>
+        <div class="button-container">
+            <a href="#" class="ey-button">Now Talks</a>
+            <a href="#" class="ey-button">EY Solutions & Offerings</a>
+            <a href="#" class="ey-button">Contact Info</a>
         </div>
         <div class="logo-container logo-right">
             <img src="images/ServiceNowLogo.png" alt="ServiceNow Logo">
